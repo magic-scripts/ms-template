@@ -217,11 +217,16 @@ config|MY_CONFIG|default_value|Configuration description|category|mycommand
 # Test locally first
 ./scripts/mycommand.sh
 
-# Calculate checksum for registry (install msreg command first: ms install msreg)
-msreg checksum ./scripts/mycommand.sh
+# Install msreg tool for registry management
+ms install msreg
 
-# Update your registry file with the new checksum
-# Push to your repository
+# Calculate checksum for your script
+msreg checksum ./scripts/mycommand.sh
+# Output: File: ./scripts/mycommand.sh
+#         SHA256 (first 8 chars): a1b2c3d4
+
+# Update your registry file with the calculated checksum
+# Then push to your repository
 git add .
 git commit -m "Add mycommand script"
 git push
@@ -233,6 +238,97 @@ ms install mycommand
 # Test the installed command
 mycommand --version
 mycommand --help
+```
+
+## 🔧 Advanced: Using msreg for Registry Management
+
+### Automatic Command Registration
+
+Instead of manually editing registry files, you can use `msreg` to add commands automatically:
+
+```bash
+# Make sure msreg is installed
+ms install msreg
+
+# Add a new command to your registry (downloads and calculates checksum automatically)
+msreg -f example.msreg add mycommand:1.0.0 https://raw.githubusercontent.com/your-username/your-repo/main/scripts/mycommand.sh
+
+# msreg will prompt for:
+# Description: Your command description
+# Category: utilities
+# Script path (relative to MAGIC_SCRIPT_DIR): scripts/mycommand.sh
+
+# Result: Command automatically added to registry with correct checksum!
+```
+
+### Adding Configuration Keys
+
+```bash
+# Add configuration key for your command
+msreg -f example.msreg config add MY_CONFIG "default_value" "Configuration description" "utilities" "mycommand"
+
+# View all config keys in your registry
+msreg -f example.msreg config list
+```
+
+### Registry Maintenance
+
+```bash
+# Remove a command
+msreg -f example.msreg remove mycommand:1.0.0
+
+# Remove a config key
+msreg -f example.msreg config remove MY_CONFIG
+
+# Remove config from specific command only
+msreg -f example.msreg config remove MY_CONFIG mycommand
+```
+
+### Workflow Example
+
+Here's a complete workflow using msreg:
+
+```bash
+# 1. Create your script
+cat > scripts/hello.sh << 'EOF'
+#!/bin/sh
+VERSION="1.0.0"
+echo "$(ms config get HELLO_NAME 2>/dev/null || echo 'World'), hello!"
+case "$1" in -v|--version) echo "hello v$VERSION"; exit 0;; esac
+EOF
+
+chmod +x scripts/hello.sh
+
+# 2. Test it locally
+./scripts/hello.sh
+
+# 3. Push to your repository first
+git add scripts/hello.sh
+git commit -m "Add hello script"
+git push
+
+# 4. Add to registry automatically
+msreg -f example.msreg add hello:1.0.0 https://raw.githubusercontent.com/your-username/your-repo/main/scripts/hello.sh
+# Enter description: "Simple hello greeting"
+# Enter category: "demo"  
+# Enter script path: "scripts/hello.sh"
+
+# 5. Add config for the script
+msreg -f example.msreg config add HELLO_NAME "World" "Name to greet" "demo" "hello"
+
+# 6. Commit registry changes
+git add example.msreg
+git commit -m "Add hello command to registry"
+git push
+
+# 7. Test installation
+ms upgrade
+ms install hello
+hello  # Output: World, hello!
+
+# 8. Test configuration
+ms config set HELLO_NAME "Magic Scripts"
+hello  # Output: Magic Scripts, hello!
 ```
 
 ## 🎯 Best Practices
