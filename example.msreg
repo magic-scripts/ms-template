@@ -1,0 +1,11 @@
+# Magic Scripts Template Registry
+# This is a template showing how to create a custom registry for your own magic scripts
+# Format: 
+#   command|script_uri|description|category|version|checksum (for commands)
+#   config|key|default_value|description|category|scripts (for configurations)
+
+# Example Commands
+command|msworld|https://raw.githubusercontent.com/magic-scripts/ms-template/main/scripts/msworld.sh|Simple world greeting script|utilities|1.0.0|abcd1234
+
+# Configuration Keys
+config|MAGICSCRIPT_WORLD|sup|Default word for world greeting|environment|msworld
