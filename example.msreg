@@ -1,11 +1,10 @@
-# Magic Scripts Template Registry
-# This is a template showing how to create a custom registry for your own magic scripts
-# Format: 
-#   command|name|script_uri|description|category|version|checksum (for commands)
-#   config|key|default_value|description|category|scripts (for configurations)
+# Magic Scripts Template Registry (2-Tier System)
+# This template shows how to create a custom registry using the new 2-tier system
+# Format: command|name|msver_url|description|category|msver_checksum
+# 
+# Each command now points to its own .msver file containing:
+# - Version information (version|ver|url|checksum)  
+# - Configuration keys (config|key|default|desc|category|scripts)
 
-# Example Commands
-command|msworld|https://raw.githubusercontent.com/magic-scripts/ms-template/main/scripts/msworld.sh|Simple world greeting script|utilities|1.0.0|d59f7fe2
-
-# Configuration Keys
-config|MAGICSCRIPT_WORLD|sup|Default word for world greeting|environment|msworld
+# Example Commands - pointing to .msver files
+command|msworld|https://raw.githubusercontent.com/your-username/ms-template/main/msworld.msver|Simple world greeting script|utilities|dev

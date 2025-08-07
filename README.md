@@ -13,13 +13,21 @@ cd my-scripts
 
 ### 2. Customize the registry
 
-Edit `example.msreg` to include your own commands and configurations:
+Edit `example.msreg` to include your own commands (2-tier system):
 
 ```bash
-# Add your commands
-command|mycommand|https://raw.githubusercontent.com/your-username/my-scripts/main/scripts/mycommand.sh|My custom command|utilities|1.0.0|checksum
+# Add your commands - pointing to .msver files
+command|mycommand|https://raw.githubusercontent.com/your-username/my-scripts/main/mycommand.msver|My custom command|utilities|dev
+```
 
-# Add your configurations  
+Create `mycommand.msver` files for each command:
+
+```bash
+# Version information
+version|1.0.0|https://raw.githubusercontent.com/your-username/my-scripts/main/scripts/mycommand.sh|a1b2c3d4
+version|dev|https://raw.githubusercontent.com/your-username/my-scripts/develop/scripts/mycommand.sh|dev
+
+# Configuration keys
 config|MY_CONFIG|default_value|Description of my config|category|mycommand
 ```
 
@@ -58,7 +66,8 @@ ms install msworld
 ```
 ms-template/
 ├── README.md              # This file
-├── example.msreg          # Registry file defining your commands and configs
+├── example.msreg          # Master registry (2-tier system)
+├── msworld.msver          # Version tree for msworld command
 └── scripts/
     └── msworld.sh         # Example script showing best practices
 ```
@@ -200,14 +209,17 @@ echo "Running with MY_CONFIG: $my_setting"
 Add an entry to `example.msreg`:
 
 ```
-command|mycommand|https://raw.githubusercontent.com/username/repo/main/scripts/mycommand.sh|My custom command|utilities|1.0.0|checksum
+command|mycommand|https://raw.githubusercontent.com/username/repo/main/mycommand.msver|My custom command|utilities|dev
 ```
 
-### 3. Add configurations (optional)
-
-If your script uses configuration values:
+Create `mycommand.msver`:
 
 ```
+# Version information
+version|1.0.0|https://raw.githubusercontent.com/username/repo/main/scripts/mycommand.sh|a1b2c3d4
+version|dev|https://raw.githubusercontent.com/username/repo/develop/scripts/mycommand.sh|dev
+
+# Configuration keys (optional)
 config|MY_CONFIG|default_value|Configuration description|category|mycommand
 ```
 

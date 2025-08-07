@@ -1,0 +1,10 @@
+# msworld Version Tree
+# Format: version|version_name|download_url|checksum
+#         config|key|default_value|description|category|scripts
+
+# Version information
+version|1.0.0|https://raw.githubusercontent.com/your-username/ms-template/main/scripts/msworld.sh|d59f7fe2
+version|dev|https://raw.githubusercontent.com/your-username/ms-template/develop/scripts/msworld.sh|dev
+
+# Configuration keys
+config|MAGICSCRIPT_WORLD|sup|Default word for world greeting|environment|msworld
