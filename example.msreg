@@ -1,7 +1,7 @@
 # Magic Scripts Template Registry
 # This is a template showing how to create a custom registry for your own magic scripts
 # Format: 
-#   command|script_uri|description|category|version|checksum (for commands)
+#   command|name|script_uri|description|category|version|checksum (for commands)
 #   config|key|default_value|description|category|scripts (for configurations)
 
 # Example Commands
