@@ -1,10 +1,10 @@
 # Magic Scripts Template Registry (2-Tier System)
 # This template shows how to create a custom registry using the new 2-tier system
-# Format: command|name|msver_url|description|category|msver_checksum
+# Format: command|name|msver_url|description|category
 # 
 # Each command now points to its own .msver file containing:
 # - Version information (version|ver|url|checksum)  
 # - Configuration keys (config|key|default|desc|category|scripts)
 
 # Example Commands - pointing to .msver files
-command|msworld|https://raw.githubusercontent.com/your-username/ms-template/main/msworld.msver|Simple world greeting script|utilities|dev
+command|msworld|https://raw.githubusercontent.com/magic-scripts/ms-template/main/msworld.msver|Simple world greeting script|utilities

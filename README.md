@@ -17,7 +17,7 @@ Edit `example.msreg` to include your own commands (2-tier system):
 
 ```bash
 # Add your commands - pointing to .msver files
-command|mycommand|https://raw.githubusercontent.com/your-username/my-scripts/main/mycommand.msver|My custom command|utilities|dev
+command|mycommand|https://raw.githubusercontent.com/your-username/my-scripts/main/mycommand.msver|My custom command|utilities
 ```
 
 Create `mycommand.msver` files for each command:
@@ -25,7 +25,7 @@ Create `mycommand.msver` files for each command:
 ```bash
 # Version information
 version|1.0.0|https://raw.githubusercontent.com/your-username/my-scripts/main/scripts/mycommand.sh|a1b2c3d4
-version|dev|https://raw.githubusercontent.com/your-username/my-scripts/develop/scripts/mycommand.sh|dev
+version|dev|https://raw.githubusercontent.com/your-username/my-scripts/main/scripts/mycommand.sh|dev
 
 # Configuration keys
 config|MY_CONFIG|default_value|Description of my config|category|mycommand
@@ -209,7 +209,7 @@ echo "Running with MY_CONFIG: $my_setting"
 Add an entry to `example.msreg`:
 
 ```
-command|mycommand|https://raw.githubusercontent.com/username/repo/main/mycommand.msver|My custom command|utilities|dev
+command|mycommand|https://raw.githubusercontent.com/username/repo/main/mycommand.msver|My custom command|utilities
 ```
 
 Create `mycommand.msver`:
@@ -217,7 +217,7 @@ Create `mycommand.msver`:
 ```
 # Version information
 version|1.0.0|https://raw.githubusercontent.com/username/repo/main/scripts/mycommand.sh|a1b2c3d4
-version|dev|https://raw.githubusercontent.com/username/repo/develop/scripts/mycommand.sh|dev
+version|dev|https://raw.githubusercontent.com/username/repo/main/scripts/mycommand.sh|dev
 
 # Configuration keys (optional)
 config|MY_CONFIG|default_value|Configuration description|category|mycommand
@@ -232,12 +232,12 @@ config|MY_CONFIG|default_value|Configuration description|category|mycommand
 # Install msreg tool for registry management
 ms install msreg
 
-# Calculate checksum for your script
+# Calculate checksum for your script (for .msver file)
 msreg checksum ./scripts/mycommand.sh
 # Output: File: ./scripts/mycommand.sh
 #         SHA256 (first 8 chars): a1b2c3d4
 
-# Update your registry file with the calculated checksum
+# Update your .msver file with the calculated checksum
 # Then push to your repository
 git add .
 git commit -m "Add mycommand script"
@@ -262,7 +262,7 @@ Instead of manually editing registry files, you can use `msreg` to add commands 
 # Make sure msreg is installed
 ms install msreg
 
-# Add a new command to your registry (downloads and calculates checksum automatically)
+# Add a new command to your registry (creates .msver file automatically)
 msreg -f example.msreg add mycommand:1.0.0 https://raw.githubusercontent.com/your-username/your-repo/main/scripts/mycommand.sh
 
 # msreg will prompt for:
@@ -270,7 +270,7 @@ msreg -f example.msreg add mycommand:1.0.0 https://raw.githubusercontent.com/you
 # Category: utilities
 # Script path (relative to MAGIC_SCRIPT_DIR): scripts/mycommand.sh
 
-# Result: Command automatically added to registry with correct checksum!
+# Result: Command added to .msreg and corresponding .msver file created!
 ```
 
 ### Adding Configuration Keys
@@ -357,7 +357,7 @@ hello  # Output: Magic Scripts, hello!
 ### Registry Guidelines
 
 - **Use** semantic versioning (1.0.0, 1.0.1, etc.)
-- **Update** checksums when scripts change
+- **Update** checksums in .msver files when scripts change
 - **Group** related configurations by category
 - **Write** clear, concise descriptions
 - **Test** URLs before committing
