@@ -5,7 +5,7 @@
 #   config|key|default_value|description|category|scripts (for configurations)
 
 # Example Commands
-command|msworld|https://raw.githubusercontent.com/magic-scripts/ms-template/main/scripts/msworld.sh|Simple world greeting script|utilities|1.0.0|abcd1234
+command|msworld|https://raw.githubusercontent.com/magic-scripts/ms-template/main/scripts/msworld.sh|Simple world greeting script|utilities|1.0.0|d59f7fe2
 
 # Configuration Keys
 config|MAGICSCRIPT_WORLD|sup|Default word for world greeting|environment|msworld
