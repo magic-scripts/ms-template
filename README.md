@@ -24,8 +24,8 @@ Create `mycommand.msver` files for each command:
 
 ```bash
 # Version information
-version|1.0.0|https://raw.githubusercontent.com/your-username/my-scripts/main/scripts/mycommand.sh|a1b2c3d4
-version|dev|https://raw.githubusercontent.com/your-username/my-scripts/main/scripts/mycommand.sh|dev
+version|1.0.0|https://raw.githubusercontent.com/your-username/my-scripts/main/mycommand.sh|a1b2c3d4
+version|dev|https://raw.githubusercontent.com/your-username/my-scripts/main/mycommand.sh|dev
 
 # Configuration keys
 config|MY_CONFIG|default_value|Description of my config|category|mycommand
@@ -33,7 +33,7 @@ config|MY_CONFIG|default_value|Description of my config|category|mycommand
 
 ### 3. Create your scripts
 
-Add your automation scripts to the `scripts/` directory. Follow the example pattern in `scripts/msworld.sh`:
+Add your automation scripts to the root directory. Follow the example pattern in `msworld.sh`:
 
 - Use proper shebang (`#!/bin/sh`)
 - Include help and version options
@@ -68,8 +68,9 @@ ms-template/
 ├── README.md              # This file
 ├── example.msreg          # Master registry (2-tier system)
 ├── msworld.msver          # Version tree for msworld command
-└── scripts/
-    └── msworld.sh         # Example script showing best practices
+├── msworld.sh             # Example script showing best practices
+├── msworld-install.sh     # Installation script
+└── msworld-uninstall.sh   # Uninstallation script
 ```
 
 ## 📝 Example: msworld Command
@@ -177,7 +178,7 @@ echo "$word, world!"
 
 ### 1. Write your script
 
-Create a new script in `scripts/` directory:
+Create a new script in the root directory:
 
 ```bash
 #!/bin/sh
@@ -216,8 +217,8 @@ Create `mycommand.msver`:
 
 ```
 # Version information
-version|1.0.0|https://raw.githubusercontent.com/username/repo/main/scripts/mycommand.sh|a1b2c3d4
-version|dev|https://raw.githubusercontent.com/username/repo/main/scripts/mycommand.sh|dev
+version|1.0.0|https://raw.githubusercontent.com/username/repo/main/mycommand.sh|a1b2c3d4
+version|dev|https://raw.githubusercontent.com/username/repo/main/mycommand.sh|dev
 
 # Configuration keys (optional)
 config|MY_CONFIG|default_value|Configuration description|category|mycommand
@@ -227,14 +228,14 @@ config|MY_CONFIG|default_value|Configuration description|category|mycommand
 
 ```bash
 # Test locally first
-./scripts/mycommand.sh
+./mycommand.sh
 
 # Install msreg tool for registry management
 ms install msreg
 
 # Calculate checksum for your script (for .msver file)
-msreg checksum ./scripts/mycommand.sh
-# Output: File: ./scripts/mycommand.sh
+msreg checksum ./mycommand.sh
+# Output: File: ./mycommand.sh
 #         SHA256 (first 8 chars): a1b2c3d4
 
 # Update your .msver file with the calculated checksum
@@ -263,12 +264,12 @@ Instead of manually editing registry files, you can use `msreg` to add commands 
 ms install msreg
 
 # Add a new command to your registry (creates .msver file automatically)
-msreg -f example.msreg add mycommand:1.0.0 https://raw.githubusercontent.com/your-username/your-repo/main/scripts/mycommand.sh
+msreg -f example.msreg add mycommand:1.0.0 https://raw.githubusercontent.com/your-username/your-repo/main/mycommand.sh
 
 # msreg will prompt for:
 # Description: Your command description
 # Category: utilities
-# Script path (relative to MAGIC_SCRIPT_DIR): scripts/mycommand.sh
+# Script path (relative to MAGIC_SCRIPT_DIR): mycommand.sh
 
 # Result: Command added to .msreg and corresponding .msver file created!
 ```
@@ -302,28 +303,28 @@ Here's a complete workflow using msreg:
 
 ```bash
 # 1. Create your script
-cat > scripts/hello.sh << 'EOF'
+cat > hello.sh << 'EOF'
 #!/bin/sh
 VERSION="1.0.0"
 echo "$(ms config get HELLO_NAME 2>/dev/null || echo 'World'), hello!"
 case "$1" in -v|--version) echo "hello v$VERSION"; exit 0;; esac
 EOF
 
-chmod +x scripts/hello.sh
+chmod +x hello.sh
 
 # 2. Test it locally
-./scripts/hello.sh
+./hello.sh
 
 # 3. Push to your repository first
-git add scripts/hello.sh
+git add hello.sh
 git commit -m "Add hello script"
 git push
 
 # 4. Add to registry automatically
-msreg -f example.msreg add hello:1.0.0 https://raw.githubusercontent.com/your-username/your-repo/main/scripts/hello.sh
+msreg -f example.msreg add hello:1.0.0 https://raw.githubusercontent.com/your-username/your-repo/main/hello.sh
 # Enter description: "Simple hello greeting"
 # Enter category: "demo"  
-# Enter script path: "scripts/hello.sh"
+# Enter script path: "hello.sh"
 
 # 5. Add config for the script
 msreg -f example.msreg config add HELLO_NAME "World" "Name to greet" "demo" "hello"
