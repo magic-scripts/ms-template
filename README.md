@@ -1,381 +1,197 @@
-# Magic Scripts Template
+# ms-template - Magic Scripts Project Template
 
-This is a template repository for creating your own Magic Scripts collection. Use this as a starting point to build your custom automation scripts and commands.
+Template repository for creating custom Magic Scripts collections with example implementations and best practices.
 
-## 🚀 Getting Started
+## ✨ Features
 
-### 1. Fork this template repository
+- 🎯 **Complete Template**: Ready-to-use project structure for Magic Scripts
+- ⚡ **Example Command**: Fully implemented `msworld` command showing best practices
+- 🔧 **Installer Scripts**: Example install, uninstall, and update scripts with migration patterns
+- 📋 **Registry System**: 2-tier registry configuration with versioning support
 
-```bash
-git clone git@github.com:magic-scripts/ms-template.git my-scripts
-cd my-scripts
-```
+## 🚀 Installation
 
-### 2. Customize the registry
-
-Edit `example.msreg` to include your own commands (2-tier system):
+### Via Magic Scripts (Recommended)
 
 ```bash
-# Add your commands - pointing to .msver files
-command|mycommand|https://raw.githubusercontent.com/your-username/my-scripts/main/mycommand.msver|My custom command|utilities
-```
+# Install Magic Scripts system
+curl -fsSL https://raw.githubusercontent.com/magic-scripts/ms/main/setup.sh | sh
 
-Create `mycommand.msver` files for each command:
-
-```bash
-# Version information
-version|1.0.0|https://raw.githubusercontent.com/your-username/my-scripts/main/mycommand.sh|a1b2c3d4
-version|dev|https://raw.githubusercontent.com/your-username/my-scripts/main/mycommand.sh|dev
-
-# Configuration keys
-config|MY_CONFIG|default_value|Description of my config|category|mycommand
-```
-
-### 3. Create your scripts
-
-Add your automation scripts to the root directory. Follow the example pattern in `msworld.sh`:
-
-- Use proper shebang (`#!/bin/sh`)
-- Include help and version options
-- Use configuration variables from the Magic Scripts system
-- Follow consistent naming and color coding
-
-### 4. Install Magic Scripts
-
-If you haven't already, install the Magic Scripts system:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/magic-scripts/ms/main/core/installer/install.sh | sh
-```
-
-### 5. Register your custom registry
-
-```bash
-# Add your custom registry to Magic Scripts
-ms reg add my-scripts https://raw.githubusercontent.com/your-username/my-scripts/main/example.msreg
-
-# Update to fetch the latest registry
+# Install example command from template
+ms reg add template https://raw.githubusercontent.com/magic-scripts/ms-template/main/example.msreg
 ms upgrade
-
-# Install commands from your registry
 ms install msworld
 ```
 
-## 📁 Template Structure
-
-```
-ms-template/
-├── README.md              # This file
-├── example.msreg          # Master registry (2-tier system)
-├── msworld.msver          # Version tree for msworld command
-├── msworld.sh             # Example script showing best practices
-├── msworld-install.sh     # Installation script
-└── msworld-uninstall.sh   # Uninstallation script
-```
-
-## 📝 Example: msworld Command
-
-The template includes `msworld` - a simple command that demonstrates:
-
-- ✅ Using configuration values (`MAGICSCRIPT_WORLD`)
-- ✅ Command-line argument handling
-- ✅ Help and version options
-- ✅ Colorful, user-friendly output
-- ✅ Error handling
-
-### Usage
+### Fork for Your Own Project
 
 ```bash
-# Use default world from configuration
+# Fork this repository and clone
+git clone git@github.com:your-username/my-scripts.git
+cd my-scripts
+```
+
+## 📖 Usage
+
+### Example Command (msworld)
+
+```bash
+# Use default world from configuration  
 msworld
 
 # Display specific world information
 msworld mars
 
 # Show current configuration
-msworld config
-
-# Get help
-msworld --help
+msworld --config
 ```
 
-### Configuration
+### Template Customization
 
-The `msworld` command uses the `MAGICSCRIPT_WORLD` configuration:
+See **[CREATE_YOUR_SCRIPTS.md](CREATE_YOUR_SCRIPTS.md)** for complete customization guide.
+
+### Quick Customization
 
 ```bash
-# Set default world
-ms config set MAGICSCRIPT_WORLD mars
+# 1. Edit registry file
+nano example.msreg
 
-# View current setting
-ms config get MAGICSCRIPT_WORLD
+# 2. Create your command scripts
+cp scripts/msworld.sh scripts/mycommand.sh
+
+# 3. Update version information
+nano registry/mycommand.msver
+
+# 4. Test locally
+./scripts/mycommand.sh --help
 ```
 
-## 🚀 Complete Installation & Testing Guide
+### Options
 
-### Quick Test of Template (5 minutes)
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-h, --help` | Show help message | - |
+| `-v, --version` | Show version information | - |
+| `--config` | Show current configuration | - |
 
-Want to see how this works right away? Here's how to test the `msworld` example:
+## ⚙️ Configuration
+
+msworld uses the Magic Scripts configuration system:
 
 ```bash
-# 1. Clone this template
-git clone https://github.com/magic-scripts/ms-template.git
-cd ms-template
+# View configuration
+ms config list | grep msworld
 
-# 2. Install Magic Scripts (if you haven't already)
-curl -fsSL https://raw.githubusercontent.com/magic-scripts/ms/main/core/installer/install.sh | sh
-
-# 3. Add this template as a registry (use local file path for testing)
-ms reg add template file://$(pwd)/example.msreg
-
-# 4. Update registries and install the example command
-ms upgrade
-ms install msworld
-
-# 5. Test the command!
-msworld                   # Shows: sup, world! (default)
-msworld goodbye           # Shows: goodbye, world!
-msworld fxxk              # Shows: fxxk, world! (😈)
+# Set configuration
+ms config set MAGICSCRIPT_WORLD "hello"
 ```
 
-### Set Configuration Values
+### Available Configuration Keys
+
+| Key | Description | Default | Category |
+|-----|-------------|---------|----------|
+| `MAGICSCRIPT_WORLD` | Default word for world greeting | `sup` | environment |
+
+## 📚 Examples & Use Cases
+
+### Learning Magic Scripts Development
+
+This template demonstrates:
+- Script structure and best practices
+- Configuration system integration
+- Registry and versioning setup
+- Installer script patterns
 
 ```bash
-# See available configurations
-ms config list -r
-
-# Set the default greeting word
-ms config set MAGICSCRIPT_WORLD hello
-
-# Now msworld will show: hello, world!
-msworld
-
-# Get configuration value
-ms config get MAGICSCRIPT_WORLD
-
-# See all your configurations
-ms config list
+# Study the example implementation
+cat scripts/msworld.sh
+cat installer/install.sh
+cat registry/msworld.msver
 ```
 
-### Understanding How Config Works
+### Creating Custom Automation
 
-The Magic Scripts config system works like this:
-
-1. **Registry defines config keys**: `example.msreg` defines `MAGICSCRIPT_WORLD`
-2. **User sets values**: `ms config set MAGICSCRIPT_WORLD hello`  
-3. **Scripts access config**: Script calls `ms config get MAGICSCRIPT_WORLD`
-4. **Fallback to defaults**: If not set, uses default from registry
+Use this template to build your own automation tools:
 
 ```bash
-# Proper way to access config in your scripts (through Magic Scripts system):
-word=$(ms config get MAGICSCRIPT_WORLD 2>/dev/null || echo "sup")
-
-# This ensures proper permission validation and registry integration
-echo "$word, world!"
+# Example: Database management scripts
+# Example: Deployment automation
+# Example: Development environment setup
 ```
 
-## 🛠 Creating Your Own Commands
+## 🔧 Integration
 
-### 1. Write your script
+### With Magic Scripts Ecosystem
 
-Create a new script in the root directory:
+ms-template integrates seamlessly with:
+- **Magic Scripts Core**: Registry and configuration system
+- **Other Commands**: Can reference shared configuration
+- **CI/CD Systems**: Installable in automated environments
+
+### Development Workflow
 
 ```bash
-#!/bin/sh
-
-VERSION="1.0.0"
-SCRIPT_NAME="mycommand"
-
-# Access configuration values through Magic Scripts system
-my_setting=$(ms config get MY_CONFIG 2>/dev/null || echo "default_fallback")
-
-# Always support --version and --help
-case "$1" in
-    -v|--version) echo "$SCRIPT_NAME v$VERSION"; exit 0 ;;
-    -h|--help) 
-        echo "Usage: $SCRIPT_NAME [options]"
-        echo "Options:"
-        echo "  -v, --version    Show version"
-        echo "  -h, --help       Show help"
-        exit 0
-        ;;
-esac
-
-# Your script logic here...
-echo "Running with MY_CONFIG: $my_setting"
-```
-
-### 2. Add to registry
-
-Add an entry to `example.msreg`:
-
-```
-command|mycommand|https://raw.githubusercontent.com/username/repo/main/mycommand.msver|My custom command|utilities
-```
-
-Create `mycommand.msver`:
-
-```
-# Version information
-version|1.0.0|https://raw.githubusercontent.com/username/repo/main/mycommand.sh|a1b2c3d4
-version|dev|https://raw.githubusercontent.com/username/repo/main/mycommand.sh|dev
-
-# Configuration keys (optional)
-config|MY_CONFIG|default_value|Configuration description|category|mycommand
-```
-
-### 4. Test and deploy
-
-```bash
-# Test locally first
-./mycommand.sh
-
-# Install msreg tool for registry management
-ms install msreg
-
-# Calculate checksum for your script (for .msver file)
-msreg checksum ./mycommand.sh
-# Output: File: ./mycommand.sh
-#         SHA256 (first 8 chars): a1b2c3d4
-
-# Update your .msver file with the calculated checksum
-# Then push to your repository
-git add .
-git commit -m "Add mycommand script"
-git push
-
-# Update Magic Scripts to get latest changes
-ms upgrade
+# Local development and testing
+ms reg add local file:///path/to/your/example.msreg
 ms install mycommand
-
-# Test the installed command
-mycommand --version
-mycommand --help
+mycommand test
 ```
 
-## 🔧 Advanced: Using msreg for Registry Management
+## 🛠️ Development
 
-### Automatic Command Registration
-
-Instead of manually editing registry files, you can use `msreg` to add commands automatically:
+### Building Your Scripts
 
 ```bash
-# Make sure msreg is installed
-ms install msreg
-
-# Add a new command to your registry (creates .msver file automatically)
-msreg -f example.msreg add mycommand:1.0.0 https://raw.githubusercontent.com/your-username/your-repo/main/mycommand.sh
-
-# msreg will prompt for:
-# Description: Your command description
-# Category: utilities
-# Script path (relative to MAGIC_SCRIPT_DIR): mycommand.sh
-
-# Result: Command added to .msreg and corresponding .msver file created!
+git clone https://github.com/your-username/my-scripts.git
+cd my-scripts
+# Edit scripts in scripts/ directory
+# Update registry files in registry/ directory
+# Test with Magic Scripts system
 ```
 
-### Adding Configuration Keys
+### Template Structure
+
+```
+ms-template/
+├── README.md              # This file
+├── CREATE_YOUR_SCRIPTS.md # Detailed customization guide  
+├── example.msreg          # Registry configuration
+├── registry/              # Version definitions
+├── scripts/               # Executable scripts
+├── installer/             # Install/uninstall/update hooks
+└── man/                   # Documentation
+```
+
+### Testing
 
 ```bash
-# Add configuration key for your command
-msreg -f example.msreg config add MY_CONFIG "default_value" "Configuration description" "utilities" "mycommand"
+# Test example command
+msworld --version
+msworld mars
 
-# View all config keys in your registry
-msreg -f example.msreg config list
+# Test registry system
+ms reg list
+ms search msworld
 ```
-
-### Registry Maintenance
-
-```bash
-# Remove a command
-msreg -f example.msreg remove mycommand:1.0.0
-
-# Remove a config key
-msreg -f example.msreg config remove MY_CONFIG
-
-# Remove config from specific command only
-msreg -f example.msreg config remove MY_CONFIG mycommand
-```
-
-### Workflow Example
-
-Here's a complete workflow using msreg:
-
-```bash
-# 1. Create your script
-cat > hello.sh << 'EOF'
-#!/bin/sh
-VERSION="1.0.0"
-echo "$(ms config get HELLO_NAME 2>/dev/null || echo 'World'), hello!"
-case "$1" in -v|--version) echo "hello v$VERSION"; exit 0;; esac
-EOF
-
-chmod +x hello.sh
-
-# 2. Test it locally
-./hello.sh
-
-# 3. Push to your repository first
-git add hello.sh
-git commit -m "Add hello script"
-git push
-
-# 4. Add to registry automatically
-msreg -f example.msreg add hello:1.0.0 https://raw.githubusercontent.com/your-username/your-repo/main/hello.sh
-# Enter description: "Simple hello greeting"
-# Enter category: "demo"  
-# Enter script path: "hello.sh"
-
-# 5. Add config for the script
-msreg -f example.msreg config add HELLO_NAME "World" "Name to greet" "demo" "hello"
-
-# 6. Commit registry changes
-git add example.msreg
-git commit -m "Add hello command to registry"
-git push
-
-# 7. Test installation
-ms upgrade
-ms install hello
-hello  # Output: World, hello!
-
-# 8. Test configuration
-ms config set HELLO_NAME "Magic Scripts"
-hello  # Output: Magic Scripts, hello!
-```
-
-## 🎯 Best Practices
-
-### Script Guidelines
-
-- **Always** include `--help` and `--version` options
-- **Use** configuration variables for user-customizable values  
-- **Follow** consistent color coding (see `msworld.sh` example)
-- **Handle** errors gracefully with meaningful messages
-- **Make** scripts portable (use POSIX shell, avoid bashisms)
-- **Document** your scripts with clear descriptions
-
-### Registry Guidelines
-
-- **Use** semantic versioning (1.0.0, 1.0.1, etc.)
-- **Update** checksums in .msver files when scripts change
-- **Group** related configurations by category
-- **Write** clear, concise descriptions
-- **Test** URLs before committing
-
-### Repository Guidelines
-
-- **Keep** the main branch stable
-- **Tag** releases with version numbers
-- **Use** descriptive commit messages
-- **Update** documentation when adding features
-- **Test** scripts before publishing
-
-## 🔗 Links
-
-- [Magic Scripts Main Repository](https://github.com/magic-scripts/ms)
-- [Documentation](https://github.com/magic-scripts/ms/blob/main/README.md)
 
 ## 📄 License
 
-This template is released under the MIT License. You're free to use it for any purpose.
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 🔗 Related Projects
+
+- **[magic-scripts/ms](https://github.com/magic-scripts/ms)** - Magic Scripts core system
+- **[magic-scripts/licgen](https://github.com/magic-scripts/licgen)** - License generator
+- **[magic-scripts/projinit](https://github.com/magic-scripts/projinit)** - Project initializer
+
+---
+
+Part of the [Magic Scripts](https://github.com/magic-scripts/ms) ecosystem.
