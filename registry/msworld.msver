@@ -1,12 +1,13 @@
 # msworld Version Tree
-# Format: version|version_name|download_url|checksum|install_script|uninstall_script|update_script
+# Format: version|version_name|download_url|checksum|install_script|uninstall_script|update_script|man_url
 #         config|key|default_value|description|category|scripts
 
 # Version information
-# install_script, uninstall_script, and update_script are optional (use empty string if not needed)
+# install_script, uninstall_script, update_script, and man_url are optional (use empty string if not needed)
 # update_script is executed when updating TO this version (e.g., 1.0.0 -> 1.0.1 runs 1.0.1's update_script)
-version|1.0.0|https://raw.githubusercontent.com/magic-scripts/ms-template/main/scripts/msworld.sh|d59f7fe2|https://raw.githubusercontent.com/magic-scripts/ms-template/main/installer/install.sh|https://raw.githubusercontent.com/magic-scripts/ms-template/main/installer/uninstall.sh|
-version|dev|https://raw.githubusercontent.com/magic-scripts/ms-template/main/scripts/msworld.sh|dev|https://raw.githubusercontent.com/magic-scripts/ms-template/main/installer/install.sh|https://raw.githubusercontent.com/magic-scripts/ms-template/main/installer/uninstall.sh|
+# man_url points to the manual page file (.1 format) for the command
+version|1.0.0|https://raw.githubusercontent.com/magic-scripts/ms-template/main/scripts/msworld.sh|d59f7fe2|https://raw.githubusercontent.com/magic-scripts/ms-template/main/installer/install.sh|https://raw.githubusercontent.com/magic-scripts/ms-template/main/installer/uninstall.sh||https://raw.githubusercontent.com/magic-scripts/ms-template/main/man/msworld.1
+version|dev|https://raw.githubusercontent.com/magic-scripts/ms-template/main/scripts/msworld.sh|dev|https://raw.githubusercontent.com/magic-scripts/ms-template/main/installer/install.sh|https://raw.githubusercontent.com/magic-scripts/ms-template/main/installer/uninstall.sh||https://raw.githubusercontent.com/magic-scripts/ms-template/main/man/msworld.1
 
 # Configuration keys
 config|MAGICSCRIPT_WORLD|sup|Default word for world greeting|environment|msworld
